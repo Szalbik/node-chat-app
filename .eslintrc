@@ -1,0 +1,8 @@
+/* eslint-disable */
+// yarn add -D prettier eslint-config-prettier eslint-plugin-prettier
+{
+  "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "rules": {
+    "no-console": "warn"
+  }
+}
