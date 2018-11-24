@@ -24,8 +24,16 @@ function formatDate(date) {
 io.on("connection", socket => {
   console.log("New user connected");
 
-  socket.on("disconnect", () => {
-    console.log("User was disconnected");
+  socket.emit("newMessage", {
+    from: "Admin",
+    text: "Welcome to the chat app",
+    createdAt: formatDate(new Date())
+  });
+
+  socket.broadcast.emit("newMessage", {
+    from: "Admin",
+    text: "New user connected",
+    createdAt: formatDate(new Date())
   });
 
   socket.on("createMessage", message => {
@@ -35,6 +43,14 @@ io.on("connection", socket => {
       text: message.text,
       createdAt: formatDate(new Date())
     });
+    // socket.broadcast.emit("newMessage", {
+    //   from: message.from,
+    //   text: message.text,
+    //   createdAt: formatDate(new Date())
+    // });
+  });
+  socket.on("disconnect", () => {
+    console.log("User was disconnected");
   });
 });
 
