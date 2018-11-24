@@ -28,12 +28,6 @@ io.on("connection", socket => {
     console.log("User was disconnected");
   });
 
-  socket.emit("newMessage", {
-    from: "Damian",
-    text: "O której się spotykamy?",
-    createdAt: formatDate(new Date())
-  });
-
   socket.on("createMessage", message => {
     console.log("createMessage", message);
     io.emit("newMessage", {
