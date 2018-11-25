@@ -39,7 +39,9 @@ document.getElementById("message-form").addEventListener(
         from: "User",
         text: document.querySelector("[name='message']").value
       },
-      () => {}
+      () => {
+        document.querySelector("[name='message']").value = "";
+      }
     );
   },
   true
@@ -51,14 +53,21 @@ locationBtn.addEventListener("click", () => {
     return alert("Geolocation not supported by your browser.");
   }
 
+  locationBtn.setAttribute("disabled", "disabled");
+  locationBtn.innerHTML = "Sending location ...";
+
   navigator.geolocation.getCurrentPosition(
     position => {
+      locationBtn.removeAttribute("disabled");
+      locationBtn.innerHTML = "Send Location";
       socket.emit("createLocationMessage", {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
       });
     },
     err => {
+      locationBtn.removeAttribute("disabled");
+      locationBtn.innerHTML = "Send Location";
       alert("Unable to fetch location");
     }
   );
