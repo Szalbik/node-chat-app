@@ -33,12 +33,9 @@ socket.on("connect", () => {
   });
 });
 
-socket.on("disconnect", () => {
-  console.log("Disconnected from server");
-});
+socket.on("disconnect", () => {});
 
 socket.on("updateUserList", users => {
-  console.log("Users list", users);
   const ol = document.createElement("ol");
   users.forEach(user => {
     const text = document.createTextNode(user);
@@ -93,7 +90,6 @@ document.getElementById("message-form").addEventListener(
     socket.emit(
       "createMessage",
       {
-        from: "User",
         text: document.querySelector("[name='message']").value
       },
       () => {
