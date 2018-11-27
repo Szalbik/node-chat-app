@@ -7,9 +7,9 @@ function scrollToBottom() {
   const lastMessage =
     messages.childNodes[messages.children.length - 2] || newMessage;
   // Heights
-  const clientHeight = messages.clientHeight;
-  const scrollTop = messages.scrollTop;
-  const scrollHeight = messages.scrollHeight;
+  const { clientHeight } = messages;
+  const { scrollTop } = messages;
+  const { scrollHeight } = messages;
   const newMessageHeight = newMessage.scrollHeight;
   const lastMessageHeight = lastMessage.scrollHeight;
 
@@ -22,11 +22,31 @@ function scrollToBottom() {
 }
 
 socket.on("connect", () => {
-  console.log("Connected to server");
+  const params = deparam(window.location.search);
+  socket.emit("join", params, err => {
+    if (err) {
+      alert(err);
+      window.location.href = "/";
+    } else {
+      console.log("No error");
+    }
+  });
 });
 
 socket.on("disconnect", () => {
   console.log("Disconnected from server");
+});
+
+socket.on("updateUserList", users => {
+  console.log("Users list", users);
+  const ol = document.createElement("ol");
+  users.forEach(user => {
+    const text = document.createTextNode(user);
+    const li = document.createElement("li");
+    li.appendChild(text);
+    ol.appendChild(li);
+  });
+  document.getElementById("users").innerHTML = ol.innerHTML;
 });
 
 socket.on("newMessage", message => {
