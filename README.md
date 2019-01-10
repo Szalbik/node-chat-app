@@ -1,7 +1,5 @@
-# node-chat-app
-Create application using socket-io
 # Node Chat App
-> Simple application to communication with people.
+> Simple application to communication with people using socket-io.
 
 ## Table of contents
 * [General info](#general-info)
